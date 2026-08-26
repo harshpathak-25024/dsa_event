@@ -3,142 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSA Challenge - Set 1</title>
+    <title>Find Your Way - Set 1</title>
+    <!-- Import Retro 8-bit Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
         body { 
-            font-family: monospace; 
-            background-color: #1e1e1e; 
-            color: #00ff00; 
+            background-color: #0a191e; /* Dark teal to match poster background */
+            /* Creates the subtle grid pattern seen in the poster */
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
+            background-size: 30px 30px;
+            color: #ffffff; 
             text-align: center; 
-            padding-top: 30px; 
+            padding-top: 40px; 
+            font-family: 'VT323', monospace; /* Highly readable retro font for buttons */
         }
         .container { 
-            max-width: 650px; 
+            max-width: 700px; 
             margin: auto; 
-            background: #2d2d2d; 
-            padding: 30px; 
-            border-radius: 10px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+            background: #152b33; 
+            padding: 40px; 
+            border: 4px solid #d872ff; /* Neon purple border matching the poster pixels */
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.8); /* Hard retro shadow */
         }
-        h1 { margin-bottom: 20px; color: #ffffff; }
+        h1 { 
+            font-family: 'Press Start 2P', cursive; /* Chunky 8-bit title font */
+            font-size: 24px;
+            color: #ffffff; 
+            text-shadow: 4px 4px 0px #b055d3; /* Pink/Purple shadow */
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: #ffcc00; /* Yellow accent */
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 0px #000;
+        }
         .level-row {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
+            align-items: stretch;
+            gap: 15px;
+            margin: 15px 0;
         }
         button { 
-            background-color: #4CAF50; 
-            color: white; 
-            border: none; 
-            padding: 12px 16px; 
-            font-size: 15px; 
+            font-family: 'VT323', monospace;
+            font-size: 22px; 
+            color: #fff; 
+            border: 4px solid #fff;
+            padding: 10px 15px; 
             cursor: pointer; 
-            border-radius: 5px; 
             flex-grow: 1;
-            transition: 0.2s; 
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0px #000;
+            transition: all 0.1s;
         }
-        button:hover { background-color: #45a049; }
+        button:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px #000;
+        }
+        /* Open/Unlocked Button Style (Matches the green START button) */
+        .open-btn {
+            background-color: #4caf50; 
+            border-color: #ffffff;
+        }
+        .open-btn:hover { background-color: #3e8e41; }
+        
+        /* Locked Button Style */
         button:disabled {
-            background-color: #555;
+            background-color: #333;
+            border-color: #555;
             color: #888;
             cursor: not-allowed;
+            box-shadow: 4px 4px 0px #111;
         }
-        .unlocked { 
-            background-color: #008CBA; 
+        /* Small unlock button */
+        .unlock-btn {
+            background-color: #d872ff;
+            color: #000;
+            font-weight: bold;
+            flex-grow: 0;
+            border-color: #fff;
         }
-        .unlocked:hover { 
-            background-color: #007399; 
-        }
+        .unlock-btn:hover { background-color: #b055d3; }
+        
+        /* Password Input */
         input[type="text"] {
-            padding: 11px;
-            border-radius: 5px;
-            border: 1px solid #444;
-            background: #111;
-            color: #fff;
-            font-family: monospace;
-            width: 90px;
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            padding: 10px;
+            border: 4px solid #555;
+            background: #000;
+            color: #39ff14; /* Neon green text for passwords */
+            width: 120px;
             text-align: center;
+            text-transform: uppercase;
         }
         input[type="text"]:focus {
-            outline: 1px solid #00ff00;
-        }
-        .unlock-btn {
-            background-color: #333;
-            border: 1px solid #555;
-            flex-grow: 0;
-            padding: 12px 14px;
-        }
-        .unlock-btn:hover {
-            background-color: #444;
+            outline: none;
+            border-color: #d872ff;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>DSA Challenge Progression</h1>
+    <h1>Find Your Way</h1>
+    <h2>--- Set 1 ---</h2>
     
     <!-- Level 1 (Open) -->
     <div class="level-row">
-        <button onclick="window.open('https://blockly.games/maze?lang=en&level=3&&skin=0', '_blank')">
-            Level 1: Blockly Maze 3 (Open)
+        <button class="open-btn" onclick="window.open('https://blockly.games/maze?lang=en&level=3&&skin=0', '_blank')">
+            Level 1: Blockly [Open]
         </button>
     </div>
 
     <!-- Level 2 -->
     <div class="level-row">
         <button id="btn-2" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=4&&skin=0', '_blank')">
-            Level 2: Blockly Maze 4 (Locked)
+            Level 2: Blockly [Locked]
         </button>
-        <input type="text" id="input-2" placeholder="Password">
-        <button class="unlock-btn" id="unlock-btn-2" onclick="verifyLevel(2, 'pass2', 'Level 2: Blockly Maze 4')">Unlock</button>
+        <input type="text" id="input-2" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-2" onclick="verifyLevel(2, 'PASS2', 'Level 2: Blockly')">Unlock</button>
     </div>
 
     <!-- Level 3 -->
     <div class="level-row">
         <button id="btn-3" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=6&&skin=0', '_blank')">
-            Level 3: Blockly Maze 6 (Locked)
+            Level 3: Blockly [Locked]
         </button>
-        <input type="text" id="input-3" placeholder="Password">
-        <button class="unlock-btn" id="unlock-btn-3" onclick="verifyLevel(3, 'pass3', 'Level 3: Blockly Maze 6')">Unlock</button>
+        <input type="text" id="input-3" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-3" onclick="verifyLevel(3, 'PASS3', 'Level 3: Blockly')">Unlock</button>
     </div>
 
     <!-- Level 4 -->
     <div class="level-row">
         <button id="btn-4" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=8&&skin=0', '_blank')">
-            Level 4: Blockly Maze 8 (Locked)
+            Level 4: Blockly [Locked]
         </button>
-        <input type="text" id="input-4" placeholder="Password">
-        <button class="unlock-btn" id="unlock-btn-4" onclick="verifyLevel(4, 'pass4', 'Level 4: Blockly Maze 8')">Unlock</button>
+        <input type="text" id="input-4" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-4" onclick="verifyLevel(4, 'PASS4', 'Level 4: Blockly')">Unlock</button>
     </div>
 
     <!-- Level 5 -->
     <div class="level-row">
         <button id="btn-5" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">
-            Level 5: Untangle - 6 Nodes (Locked)
+            Level 5: Untangle (6 Nodes)
         </button>
-        <input type="text" id="input-5" placeholder="Password">
-        <button class="unlock-btn" id="unlock-btn-5" onclick="verifyLevel(5, 'pass5', 'Level 5: Untangle - 6 Nodes')">Unlock</button>
+        <input type="text" id="input-5" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-5" onclick="verifyLevel(5, 'PASS5', 'Level 5: Untangle (6 Nodes)')">Unlock</button>
     </div>
 
     <!-- Level 6 -->
     <div class="level-row">
         <button id="btn-6" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">
-            Level 6: Untangle - 10 Nodes (Locked)
+            Level 6: Untangle (10 Nodes)
         </button>
-        <input type="text" id="input-6" placeholder="Password">
-        <button class="unlock-btn" id="unlock-btn-6" onclick="verifyLevel(6, 'pass6', 'Level 6: Untangle - 10 Nodes')">Unlock</button>
+        <input type="text" id="input-6" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-6" onclick="verifyLevel(6, 'PASS6', 'Level 6: Untangle (10 Nodes)')">Unlock</button>
     </div>
 
     <!-- Level 7 -->
     <div class="level-row">
         <button id="btn-7" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">
-            Level 7: Untangle - 15 Nodes (Locked)
+            Level 7: Untangle (15 Nodes)
         </button>
-        <input type="text" id="input-7" placeholder="Password">
-        <button class="unlock-btn" id="unlock-btn-7" onclick="verifyLevel(7, 'pass7', 'Level 7: Untangle - 15 Nodes')">Unlock</button>
+        <input type="text" id="input-7" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-7" onclick="verifyLevel(7, 'PASS7', 'Level 7: Untangle (15 Nodes)')">Unlock</button>
     </div>
 </div>
 
@@ -148,16 +182,20 @@
         let mainBtn = document.getElementById(`btn-${levelNum}`);
         let unlockBtn = document.getElementById(`unlock-btn-${levelNum}`);
 
-        if (input.value.trim() === correctPassword) {
+        // Converts their input to uppercase so 'pass2' or 'PASS2' both work
+        if (input.value.trim().toUpperCase() === correctPassword.toUpperCase()) {
             mainBtn.disabled = false;
-            mainBtn.classList.add('unlocked');
-            mainBtn.innerText = `${levelLabel} (Unlocked ✓ - Click to Play)`;
             
-            // Clean up input field and unlock button
+            // Switch style to unlocked green
+            mainBtn.classList.add('open-btn');
+            mainBtn.innerText = `${levelLabel} [PLAY]`;
+            
+            // Hide the input and unlock button
             input.style.display = 'none';
             unlockBtn.style.display = 'none';
         } else {
-            alert("Incorrect password. Have the host verify your previous level first!");
+            alert("INCORRECT PASSCODE. CALL THE HOST!");
+            input.value = ""; // Clears the wrong password
         }
     }
 </script>
