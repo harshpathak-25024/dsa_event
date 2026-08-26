@@ -12,6 +12,8 @@
         button:hover { background-color: #45a049; }
         .locked { background-color: #555; }
         .locked:hover { background-color: #777; }
+        .unlocked { background-color: #008CBA; } /* Blue color for unlocked/completed levels */
+        .unlocked:hover { background-color: #007399; }
     </style>
 </head>
 <body>
@@ -24,39 +26,52 @@
         Level 1: Blockly Maze 3 (Open)
     </button>
 
-    <!-- Blockly Levels (Locked) -->
-    <button class="locked" onclick="checkPassword('Level 2', 'pass2', 'https://blockly.games/maze?lang=en&level=4&&skin=0')">
+    <!-- Blockly Levels -->
+    <button id="btn-2" class="locked" onclick="checkPassword('Level 2', 'pass2', 'https://blockly.games/maze?lang=en&level=4&&skin=0', 'btn-2')">
         Level 2: Blockly Maze 4 (Locked)
     </button>
 
-    <button class="locked" onclick="checkPassword('Level 3', 'pass3', 'https://blockly.games/maze?lang=en&level=6&&skin=0')">
+    <button id="btn-3" class="locked" onclick="checkPassword('Level 3', 'pass3', 'https://blockly.games/maze?lang=en&level=6&&skin=0', 'btn-3')">
         Level 3: Blockly Maze 6 (Locked)
     </button>
 
-    <button class="locked" onclick="checkPassword('Level 4', 'pass4', 'https://blockly.games/maze?lang=en&level=8&&skin=0')">
+    <button id="btn-4" class="locked" onclick="checkPassword('Level 4', 'pass4', 'https://blockly.games/maze?lang=en&level=8&&skin=0', 'btn-4')">
         Level 4: Blockly Maze 8 (Locked)
     </button>
 
-    <!-- Untangle Levels (Locked) -->
-    <button class="locked" onclick="checkPassword('Level 5', 'pass5', 'https://puzzles.twistymaze.com/untangle')">
+    <!-- Untangle Levels -->
+    <button id="btn-5" class="locked" onclick="checkPassword('Level 5', 'pass5', 'https://puzzles.twistymaze.com/untangle', 'btn-5')">
         Level 5: Untangle - Set to 6 Nodes (Locked)
     </button>
 
-    <button class="locked" onclick="checkPassword('Level 6', 'pass6', 'https://puzzles.twistymaze.com/untangle')">
+    <button id="btn-6" class="locked" onclick="checkPassword('Level 6', 'pass6', 'https://puzzles.twistymaze.com/untangle', 'btn-6')">
         Level 6: Untangle - Set to 10 Nodes (Locked)
     </button>
 
-    <button class="locked" onclick="checkPassword('Level 7', 'pass7', 'https://puzzles.twistymaze.com/untangle')">
+    <button id="btn-7" class="locked" onclick="checkPassword('Level 7', 'pass7', 'https://puzzles.twistymaze.com/untangle', 'btn-7')">
         Level 7: Untangle - Set to 15 Nodes (Locked)
     </button>
 </div>
 
 <script>
-    function checkPassword(levelName, correctPassword, targetUrl) {
+    function checkPassword(levelName, correctPassword, targetUrl, buttonId) {
+        let btn = document.getElementById(buttonId);
+
+        // If it's already unlocked, just open the link immediately without asking for a password again
+        if (btn.classList.contains('unlocked')) {
+            window.open(targetUrl, '_blank');
+            return;
+        }
+
         let guess = prompt(`Enter the password for ${levelName}.\n(Call the host over to verify your screen to get the password!)`);
         
         if (guess === correctPassword) {
-            // Creates a hidden anchor tag to bypass popup blockers cleanly
+            // Change button styling to Unlocked
+            btn.classList.remove('locked');
+            btn.classList.add('unlocked');
+            btn.innerText = levelName + " (Unlocked ✓)";
+
+            // Open the target URL in a new tab
             let anchor = document.createElement('a');
             anchor.href = targetUrl;
             anchor.target = '_blank';
