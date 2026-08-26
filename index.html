@@ -3,16 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSA Challenge - Set 1</title>
+    <title>DSA Challenge - Set 1 (v2.0)</title>
     <style>
-        body { font-family: monospace; background-color: #1e1e1e; color: #00ff00; text-align: center; padding-top: 30px; }
-        .container { max-width: 650px; margin: auto; background: #2d2d2d; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        body { 
+            font-family: monospace; 
+            background-color: #1e1e1e; 
+            color: #00ff00; 
+            text-align: center; 
+            padding-top: 30px; 
+        }
+        .container { 
+            max-width: 650px; 
+            margin: auto; 
+            background: #2d2d2d; 
+            padding: 30px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+        }
         h1 { margin-bottom: 20px; color: #ffffff; }
-        button { background-color: #4CAF50; color: white; border: none; padding: 12px 20px; margin: 8px; font-size: 16px; cursor: pointer; border-radius: 5px; width: 85%; transition: 0.3s; }
+        button { 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            margin: 8px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            border-radius: 5px; 
+            width: 85%; 
+            transition: 0.3s; 
+        }
         button:hover { background-color: #45a049; }
         .locked { background-color: #555; }
         .locked:hover { background-color: #777; }
-        .unlocked { background-color: #008CBA; } /* Blue color for unlocked/completed levels */
+        .unlocked { background-color: #008CBA; }
         .unlocked:hover { background-color: #007399; }
     </style>
 </head>
@@ -21,12 +45,12 @@
 <div class="container">
     <h1>DSA Game Progression: Set 1</h1>
     
-    <!-- Level 1 is open by default -->
+    <!-- Level 1 (Open) -->
     <button onclick="window.open('https://blockly.games/maze?lang=en&level=3&&skin=0', '_blank')">
         Level 1: Blockly Maze 3 (Open)
     </button>
 
-    <!-- Blockly Levels -->
+    <!-- Blockly Levels (Locked) -->
     <button id="btn-2" class="locked" onclick="checkPassword('Level 2', 'pass2', 'https://blockly.games/maze?lang=en&level=4&&skin=0', 'btn-2')">
         Level 2: Blockly Maze 4 (Locked)
     </button>
@@ -39,7 +63,7 @@
         Level 4: Blockly Maze 8 (Locked)
     </button>
 
-    <!-- Untangle Levels -->
+    <!-- Untangle Levels (Locked) -->
     <button id="btn-5" class="locked" onclick="checkPassword('Level 5', 'pass5', 'https://puzzles.twistymaze.com/untangle', 'btn-5')">
         Level 5: Untangle - Set to 6 Nodes (Locked)
     </button>
@@ -57,7 +81,6 @@
     function checkPassword(levelName, correctPassword, targetUrl, buttonId) {
         let btn = document.getElementById(buttonId);
 
-        // If it's already unlocked, just open the link immediately without asking for a password again
         if (btn.classList.contains('unlocked')) {
             window.open(targetUrl, '_blank');
             return;
@@ -66,12 +89,10 @@
         let guess = prompt(`Enter the password for ${levelName}.\n(Call the host over to verify your screen to get the password!)`);
         
         if (guess === correctPassword) {
-            // Change button styling to Unlocked
             btn.classList.remove('locked');
             btn.classList.add('unlocked');
             btn.innerText = levelName + " (Unlocked ✓)";
- 
-            // Open the target URL in a new tab
+
             let anchor = document.createElement('a');
             anchor.href = targetUrl;
             anchor.target = '_blank';
