@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Way - Set 2</title>
+    <!-- Import Retro 8-bit Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <!-- Confetti Animation Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body { 
+            background-color: #0a191e; 
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
+            background-size: 30px 30px;
+            color: #ffffff; 
+            text-align: center; 
+            padding-top: 40px; 
+            padding-bottom: 40px;
+            font-family: 'VT323', monospace; 
+        }
+        .container { 
+            max-width: 700px; 
+            margin: auto; 
+            background: #152b33; 
+            padding: 40px; 
+            border: 4px solid #d872ff; 
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.8); 
+            position: relative;
+        }
+        h1 { 
+            font-family: 'Press Start 2P', cursive; 
+            font-size: 24px;
+            color: #ffffff; 
+            text-shadow: 4px 4px 0px #b055d3; 
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: #ffcc00; 
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0px #000;
+        }
+        
+        .level-row {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        button { 
+            font-family: 'VT323', monospace;
+            font-size: 22px; 
+            color: #fff; 
+            border: 4px solid #fff;
+            padding: 10px 15px; 
+            cursor: pointer; 
+            flex-grow: 1;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0px #000;
+            transition: all 0.1s;
+        }
+        button:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px #000;
+        }
+        
+        /* Button Colors */
+        .open-btn { background-color: #4caf50; border-color: #ffffff; }
+        .open-btn:hover { background-color: #3e8e41; }
+        
+        .tutorial-btn { background-color: #008CBA; margin-bottom: 25px; width: 100%; }
+        .tutorial-btn:hover { background-color: #007399; }
+
+        button:disabled {
+            background-color: #333;
+            border-color: #555;
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: 4px 4px 0px #111;
+        }
+        .unlock-btn {
+            background-color: #d872ff;
+            color: #000;
+            font-weight: bold;
+            flex-grow: 0;
+            border-color: #fff;
+        }
+        .unlock-btn:hover { background-color: #b055d3; }
+        
+        .victory-btn {
+            background-color: #ffcc00 !important;
+            color: #000 !important;
+            border-color: #fff !important;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            padding: 10px;
+            border: 4px solid #555;
+            background: #000;
+            color: #39ff14; 
+            width: 120px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #d872ff;
+        }
+
+        /* Tutorial Modal Styles */
+        #tutorial-modal {
+            display: none; 
+            position: fixed; 
+            z-index: 100; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.8); 
+        }
+        .modal-content {
+            background-color: #111;
+            margin: 5% auto; 
+            padding: 30px;
+            border: 4px solid #39ff14;
+            width: 80%;
+            max-width: 600px;
+            max-height: 75vh; 
+            overflow-y: auto; 
+            color: #fff;
+            text-align: left;
+            box-shadow: 10px 10px 0px #000;
+        }
+
+        /* Custom Retro Scrollbar */
+        .modal-content::-webkit-scrollbar {
+            width: 15px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: #000;
+            border-left: 2px solid #39ff14;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #39ff14; 
+        }
+
+        .modal-content h3 {
+            color: #ffcc00;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .modal-content p, .modal-content li {
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        .modal-content ul { margin-bottom: 20px; }
+        .close-btn {
+            background-color: #ff0044;
+            color: white;
+            border: 2px solid white;
+            padding: 10px;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .close-btn:hover { background-color: #cc0033; }
+        
+        .block-highlight { color: #d872ff; font-weight: bold; }
+        
+        /* Video Styling */
+        .tutorial-video {
+            width: 100%;
+            border: 2px solid #555;
+            margin: 15px 0;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Tutorial Modal Popup -->
+<div id="tutorial-modal">
+    <div class="modal-content">
+        <h3 style="text-align: center; color: #fff; text-shadow: 2px 2px #d872ff;">--- HOW TO PLAY ---</h3>
+        
+        <h3>GAME 1: BLOCKLY MAZE</h3>
+        <p>Snap programming blocks together to guide your character to the red target. You must solve the puzzle using the limited blocks provided!</p>
+        
+        <!-- Looping Video for Blockly -->
+        <video src="blocks.mp4" class="tutorial-video" autoplay loop muted playsinline controls></video>
+
+        <ul>
+            <li><span class="block-highlight">Move Forward:</span> Steps your character forward exactly one space in the direction they are facing.</li>
+            <li><span class="block-highlight">Turn Left/Right:</span> Rotates your character 90 degrees without moving forward.</li>
+            <li><span class="block-highlight">Repeat Until:</span> A loop! Any blocks placed inside this "C" shaped block will repeat continuously until you reach the finish line.</li>
+            <li><span class="block-highlight">If Path:</span> A condition. It checks if there is a path in a specific direction. If true, it runs the blocks inside it.</li>
+        </ul>
+
+        <h3>GAME 2: UNTANGLE</h3>
+        <p>You will see a messy web of points connected by lines. Your goal is to drag the points around the screen until <strong>ZERO lines intersect</strong>.</p>
+        
+        <!-- Looping Video for Untangle -->
+        <video src="untangle.mp4" class="tutorial-video" autoplay loop muted playsinline controls></video>
+
+        <ul>
+            <li>Lines that cross each other will be dark/red.</li>
+            <li>When a line is completely free of intersections, it turns green or fades out.</li>
+            <li>The puzzle is solved when the entire shape is untangled!</li>
+        </ul>
+
+        <button class="close-btn" onclick="closeTutorial()">[ CLOSE TUTORIAL ]</button>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Find Your Way</h1>
+    <h2>--- Set 2 ---</h2>
+    
+    <button class="tutorial-btn" onclick="openTutorial()">? HOW TO PLAY (TUTORIAL)</button>
+
+    <div class="level-row">
+        <button class="open-btn" onclick="window.open('https://blockly.games/maze?lang=en&level=3&&skin=0', '_blank')">
+            Trial Run: Blockly [Play Now]
+        </button>
+    </div>
+
+    <!-- LEVEL 1: Blockly Maze 4 -->
+    <div class="level-row">
+        <button id="btn-1" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=4&&skin=0', '_blank')">
+            Level 1: Blockly [Locked]
+        </button>
+        <input type="text" id="input-1" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-1" onclick="verifyLevel(1, 'PASS1', 'Level 1: Blockly')">Unlock</button>
+    </div>
+
+    <!-- LEVEL 2: Blockly Maze 7 -->
+    <div class="level-row">
+        <button id="btn-2" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=7&&skin=0', '_blank')">
+            Level 2: Blockly [Locked]
+        </button>
+        <input type="text" id="input-2" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-2" onclick="verifyLevel(2, 'PASS2', 'Level 2: Blockly')">Unlock</button>
+    </div>
+
+    <!-- LEVEL 3: Blockly Maze 9 -->
+    <div class="level-row">
+        <button id="btn-3" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=9&&skin=0', '_blank')">
+            Level 3: Blockly [Locked]
+        </button>
+        <input type="text" id="input-3" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-3" onclick="verifyLevel(3, 'PASS3', 'Level 3: Blockly')">Unlock</button>
+    </div>
+
+    <!-- LEVEL 4: Untangle 6 Nodes -->
+    <div class="level-row">
+        <button id="btn-4" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">
+            Level 4: Untangle (6 Nodes)
+        </button>
+        <input type="text" id="input-4" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-4" onclick="verifyLevel(4, 'PASS4', 'Level 4: Untangle (6 Nodes)')">Unlock</button>
+    </div>
+
+    <!-- LEVEL 5: Untangle 8 Nodes -->
+    <div class="level-row">
+        <button id="btn-5" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">
+            Level 5: Untangle (8 Nodes)
+        </button>
+        <input type="text" id="input-5" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-5" onclick="verifyLevel(5, 'PASS5', 'Level 5: Untangle (8 Nodes)')">Unlock</button>
+    </div>
+
+    <!-- LEVEL 6: Untangle 12 Nodes -->
+    <div class="level-row">
+        <button id="btn-6" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">
+            Level 6: Untangle (12 Nodes)
+        </button>
+        <input type="text" id="input-6" placeholder="PASSCODE">
+        <button class="unlock-btn" id="unlock-btn-6" onclick="verifyLevel(6, 'PASS6', 'Level 6: Untangle (12 Nodes)')">Unlock</button>
+    </div>
+
+    <div class="level-row" style="margin-top: 40px;">
+        <button id="btn-win" disabled>
+            --- FINISH LINE ---
+        </button>
+        <input type="text" id="input-win" placeholder="PASSCODE" style="width: 140px;">
+        <button class="unlock-btn" id="unlock-btn-win" onclick="verifyVictory('SET2COMPLETED')">Unlock</button>
+    </div>
+</div>
+
+<script>
+    function openTutorial() {
+        document.getElementById('tutorial-modal').style.display = 'block';
+    }
+
+    function closeTutorial() {
+        document.getElementById('tutorial-modal').style.display = 'none';
+    }
+
+    function verifyLevel(levelNum, correctPassword, levelLabel) {
+        let input = document.getElementById(`input-${levelNum}`);
+        let mainBtn = document.getElementById(`btn-${levelNum}`);
+        let unlockBtn = document.getElementById(`unlock-btn-${levelNum}`);
+
+        if (input.value.trim().toUpperCase() === correctPassword.toUpperCase()) {
+            mainBtn.disabled = false;
+            mainBtn.classList.add('open-btn');
+            mainBtn.innerText = `${levelLabel} [PLAY]`;
+            
+            input.style.display = 'none';
+            unlockBtn.style.display = 'none';
+        } else {
+            alert("INCORRECT PASSCODE. CALL THE HOST!");
+            input.value = ""; 
+        }
+    }
+
+    function verifyVictory(correctPassword) {
+        let input = document.getElementById('input-win');
+        let mainBtn = document.getElementById('btn-win');
+        let unlockBtn = document.getElementById('unlock-btn-win');
+
+        if (input.value.trim().toUpperCase() === correctPassword.toUpperCase()) {
+            mainBtn.disabled = false;
+            mainBtn.classList.add('victory-btn');
+            mainBtn.innerText = "🏆 SET 2 ACCOMPLISHED 🏆";
+            
+            input.style.display = 'none';
+            unlockBtn.style.display = 'none';
+
+            var count = 250;
+            var defaults = { origin: { y: 0.7 }, zIndex: 10000 };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+        } else {
+            alert("INCORRECT PASSCODE. COMPLETE LEVEL 6 FIRST!");
+            input.value = ""; 
+        }
+    }
+</script>
+
+</body>
+</html>
