@@ -56,8 +56,13 @@
         let guess = prompt(`Enter the password for ${levelName}.\n(Call the host over to verify your screen to get the password!)`);
         
         if (guess === correctPassword) {
-            // Opens directly in a new tab without showing an extra "Access Granted" alert box
-            window.open(targetUrl, '_blank');
+            // Creates a hidden anchor tag to bypass popup blockers cleanly
+            let anchor = document.createElement('a');
+            anchor.href = targetUrl;
+            anchor.target = '_blank';
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
         } else if (guess !== null) {
             alert("Incorrect password. Solve the previous level first!");
         }
