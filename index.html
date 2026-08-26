@@ -6,10 +6,11 @@
     <title>Find Your Way - Set 1</title>
     <!-- Import Retro 8-bit Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <!-- Confetti Animation Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body { 
-            background-color: #0a191e; /* Dark teal to match poster background */
-            /* Creates the subtle grid pattern seen in the poster */
+            background-color: #0a191e; 
             background-image: 
                 linear-gradient(rgba(255, 255, 255, 0.05) 2px, transparent 2px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
@@ -17,28 +18,29 @@
             color: #ffffff; 
             text-align: center; 
             padding-top: 40px; 
-            font-family: 'VT323', monospace; /* Highly readable retro font for buttons */
+            padding-bottom: 40px;
+            font-family: 'VT323', monospace; 
         }
         .container { 
             max-width: 700px; 
             margin: auto; 
             background: #152b33; 
             padding: 40px; 
-            border: 4px solid #d872ff; /* Neon purple border matching the poster pixels */
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.8); /* Hard retro shadow */
+            border: 4px solid #d872ff; 
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.8); 
         }
         h1 { 
-            font-family: 'Press Start 2P', cursive; /* Chunky 8-bit title font */
+            font-family: 'Press Start 2P', cursive; 
             font-size: 24px;
             color: #ffffff; 
-            text-shadow: 4px 4px 0px #b055d3; /* Pink/Purple shadow */
+            text-shadow: 4px 4px 0px #b055d3; 
             margin-bottom: 10px;
             text-transform: uppercase;
         }
         h2 {
             font-family: 'Press Start 2P', cursive;
             font-size: 14px;
-            color: #ffcc00; /* Yellow accent */
+            color: #ffcc00; 
             margin-bottom: 40px;
             text-shadow: 2px 2px 0px #000;
         }
@@ -65,14 +67,13 @@
             transform: translate(4px, 4px);
             box-shadow: 0px 0px 0px #000;
         }
-        /* Open/Unlocked Button Style (Matches the green START button) */
+        
         .open-btn {
             background-color: #4caf50; 
             border-color: #ffffff;
         }
         .open-btn:hover { background-color: #3e8e41; }
         
-        /* Locked Button Style */
         button:disabled {
             background-color: #333;
             border-color: #555;
@@ -80,7 +81,6 @@
             cursor: not-allowed;
             box-shadow: 4px 4px 0px #111;
         }
-        /* Small unlock button */
         .unlock-btn {
             background-color: #d872ff;
             color: #000;
@@ -90,14 +90,21 @@
         }
         .unlock-btn:hover { background-color: #b055d3; }
         
-        /* Password Input */
+        /* The special Gold Victory Button */
+        .victory-btn {
+            background-color: #ffcc00 !important;
+            color: #000 !important;
+            border-color: #fff !important;
+            font-weight: bold;
+        }
+
         input[type="text"] {
             font-family: 'VT323', monospace;
             font-size: 20px;
             padding: 10px;
             border: 4px solid #555;
             background: #000;
-            color: #39ff14; /* Neon green text for passwords */
+            color: #39ff14; 
             width: 120px;
             text-align: center;
             text-transform: uppercase;
@@ -174,6 +181,15 @@
         <input type="text" id="input-7" placeholder="PASSCODE">
         <button class="unlock-btn" id="unlock-btn-7" onclick="verifyLevel(7, 'PASS7', 'Level 7: Untangle (15 Nodes)')">Unlock</button>
     </div>
+
+    <!-- FINAL COMPLETION ROW -->
+    <div class="level-row" style="margin-top: 40px;">
+        <button id="btn-win" disabled>
+            --- FINISH LINE ---
+        </button>
+        <input type="text" id="input-win" placeholder="PASSCODE" style="width: 140px;">
+        <button class="unlock-btn" id="unlock-btn-win" onclick="verifyVictory('SET1COMPLETED')">Unlock</button>
+    </div>
 </div>
 
 <script>
@@ -182,20 +198,54 @@
         let mainBtn = document.getElementById(`btn-${levelNum}`);
         let unlockBtn = document.getElementById(`unlock-btn-${levelNum}`);
 
-        // Converts their input to uppercase so 'pass2' or 'PASS2' both work
         if (input.value.trim().toUpperCase() === correctPassword.toUpperCase()) {
             mainBtn.disabled = false;
-            
-            // Switch style to unlocked green
             mainBtn.classList.add('open-btn');
             mainBtn.innerText = `${levelLabel} [PLAY]`;
             
-            // Hide the input and unlock button
             input.style.display = 'none';
             unlockBtn.style.display = 'none';
         } else {
             alert("INCORRECT PASSCODE. CALL THE HOST!");
-            input.value = ""; // Clears the wrong password
+            input.value = ""; 
+        }
+    }
+
+    function verifyVictory(correctPassword) {
+        let input = document.getElementById('input-win');
+        let mainBtn = document.getElementById('btn-win');
+        let unlockBtn = document.getElementById('unlock-btn-win');
+
+        if (input.value.trim().toUpperCase() === correctPassword.toUpperCase()) {
+            mainBtn.disabled = false;
+            mainBtn.classList.add('victory-btn');
+            mainBtn.innerText = "🏆 MISSION ACCOMPLISHED 🏆";
+            
+            input.style.display = 'none';
+            unlockBtn.style.display = 'none';
+
+            // Fire the Confetti!
+            var count = 250;
+            var defaults = {
+                origin: { y: 0.7 },
+                zIndex: 10000
+            };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+
+        } else {
+            alert("INCORRECT PASSCODE. COMPLETE LEVEL 7 FIRST!");
+            input.value = ""; 
         }
     }
 </script>
