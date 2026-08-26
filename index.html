@@ -134,10 +134,25 @@
             border: 4px solid #39ff14;
             width: 80%;
             max-width: 600px;
+            max-height: 75vh; 
+            overflow-y: auto; 
             color: #fff;
             text-align: left;
             box-shadow: 10px 10px 0px #000;
         }
+
+        /* Custom Retro Scrollbar */
+        .modal-content::-webkit-scrollbar {
+            width: 15px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: #000;
+            border-left: 2px solid #39ff14;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #39ff14; 
+        }
+
         .modal-content h3 {
             color: #ffcc00;
             font-family: 'Press Start 2P', cursive;
@@ -162,6 +177,14 @@
         .close-btn:hover { background-color: #cc0033; }
         
         .block-highlight { color: #d872ff; font-weight: bold; }
+        
+        /* Video Styling */
+        .tutorial-video {
+            width: 100%;
+            border: 2px solid #555;
+            margin: 15px 0;
+            background: #000;
+        }
     </style>
 </head>
 <body>
@@ -173,17 +196,25 @@
         
         <h3>GAME 1: BLOCKLY MAZE</h3>
         <p>Snap programming blocks together to guide your character to the red target. You must solve the puzzle using the limited blocks provided!</p>
+        
+        <!-- Looping Video for Blockly -->
+        <video src="blocks.mp4" class="tutorial-video" autoplay loop muted playsinline controls></video>
+
         <ul>
             <li><span class="block-highlight">Move Forward:</span> Steps your character forward exactly one space in the direction they are facing.</li>
             <li><span class="block-highlight">Turn Left/Right:</span> Rotates your character 90 degrees without moving forward.</li>
             <li><span class="block-highlight">Repeat Until:</span> A loop! Any blocks placed inside this "C" shaped block will repeat continuously until you reach the finish line.</li>
-            <li><span class="block-highlight">If Path:</span> A condition. It checks if there is a path in a specific direction (e.g., "If path to the right"). If true, it runs the blocks inside it.</li>
+            <li><span class="block-highlight">If Path:</span> A condition. It checks if there is a path in a specific direction. If true, it runs the blocks inside it.</li>
         </ul>
 
         <h3>GAME 2: UNTANGLE</h3>
         <p>You will see a messy web of points connected by lines. Your goal is to drag the points around the screen until <strong>ZERO lines intersect</strong>.</p>
+        
+        <!-- Looping Video for Untangle -->
+        <video src="untangle.mp4" class="tutorial-video" autoplay loop muted playsinline controls></video>
+
         <ul>
-            <li>Lines that cross each other will be red or dark.</li>
+            <li>Lines that cross each other will be dark/red.</li>
             <li>When a line is completely free of intersections, it turns green or fades out.</li>
             <li>The puzzle is solved when the entire shape is untangled!</li>
         </ul>
@@ -196,17 +227,14 @@
     <h1>Find Your Way</h1>
     <h2>--- Set 1 ---</h2>
     
-    <!-- Tutorial Button -->
     <button class="tutorial-btn" onclick="openTutorial()">? HOW TO PLAY (TUTORIAL)</button>
 
-    <!-- TRIAL Level (Formerly Level 1) -->
     <div class="level-row">
         <button class="open-btn" onclick="window.open('https://blockly.games/maze?lang=en&level=3&&skin=0', '_blank')">
             Trial Run: Blockly [Play Now]
         </button>
     </div>
 
-    <!-- NEW Level 1 -->
     <div class="level-row">
         <button id="btn-1" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=4&&skin=0', '_blank')">
             Level 1: Blockly [Locked]
@@ -215,7 +243,6 @@
         <button class="unlock-btn" id="unlock-btn-1" onclick="verifyLevel(1, 'PASS1', 'Level 1: Blockly')">Unlock</button>
     </div>
 
-    <!-- NEW Level 2 -->
     <div class="level-row">
         <button id="btn-2" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=6&&skin=0', '_blank')">
             Level 2: Blockly [Locked]
@@ -224,7 +251,6 @@
         <button class="unlock-btn" id="unlock-btn-2" onclick="verifyLevel(2, 'PASS2', 'Level 2: Blockly')">Unlock</button>
     </div>
 
-    <!-- NEW Level 3 -->
     <div class="level-row">
         <button id="btn-3" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=8&&skin=0', '_blank')">
             Level 3: Blockly [Locked]
@@ -233,7 +259,6 @@
         <button class="unlock-btn" id="unlock-btn-3" onclick="verifyLevel(3, 'PASS3', 'Level 3: Blockly')">Unlock</button>
     </div>
 
-    <!-- NEW Level 4 -->
     <div class="level-row">
         <button id="btn-4" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">
             Level 4: Untangle (6 Nodes)
@@ -242,7 +267,6 @@
         <button class="unlock-btn" id="unlock-btn-4" onclick="verifyLevel(4, 'PASS4', 'Level 4: Untangle (6 Nodes)')">Unlock</button>
     </div>
 
-    <!-- NEW Level 5 -->
     <div class="level-row">
         <button id="btn-5" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">
             Level 5: Untangle (10 Nodes)
@@ -251,7 +275,6 @@
         <button class="unlock-btn" id="unlock-btn-5" onclick="verifyLevel(5, 'PASS5', 'Level 5: Untangle (10 Nodes)')">Unlock</button>
     </div>
 
-    <!-- NEW Level 6 -->
     <div class="level-row">
         <button id="btn-6" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">
             Level 6: Untangle (15 Nodes)
@@ -260,7 +283,6 @@
         <button class="unlock-btn" id="unlock-btn-6" onclick="verifyLevel(6, 'PASS6', 'Level 6: Untangle (15 Nodes)')">Unlock</button>
     </div>
 
-    <!-- FINAL COMPLETION ROW -->
     <div class="level-row" style="margin-top: 40px;">
         <button id="btn-win" disabled>
             --- FINISH LINE ---
@@ -271,7 +293,6 @@
 </div>
 
 <script>
-    // Tutorial Modal Logic
     function openTutorial() {
         document.getElementById('tutorial-modal').style.display = 'block';
     }
@@ -280,14 +301,12 @@
         document.getElementById('tutorial-modal').style.display = 'none';
     }
 
-    // Verify Passcodes for standard levels
     function verifyLevel(levelNum, correctPassword, levelLabel) {
         let input = document.getElementById(`input-${levelNum}`);
         let mainBtn = document.getElementById(`btn-${levelNum}`);
         let unlockBtn = document.getElementById(`unlock-btn-${levelNum}`);
 
         if (input.value.trim().toUpperCase() === correctPassword.toUpperCase()) {
-            
             mainBtn.disabled = false;
             mainBtn.classList.add('open-btn');
             mainBtn.innerText = `${levelLabel} [PLAY]`;
@@ -300,14 +319,12 @@
         }
     }
 
-    // Verify Final Victory Passcode
     function verifyVictory(correctPassword) {
         let input = document.getElementById('input-win');
         let mainBtn = document.getElementById('btn-win');
         let unlockBtn = document.getElementById('unlock-btn-win');
 
         if (input.value.trim().toUpperCase() === correctPassword.toUpperCase()) {
-            
             mainBtn.disabled = false;
             mainBtn.classList.add('victory-btn');
             mainBtn.innerText = "🏆 MISSION ACCOMPLISHED 🏆";
@@ -315,12 +332,8 @@
             input.style.display = 'none';
             unlockBtn.style.display = 'none';
 
-            // Fire the Confetti!
             var count = 250;
-            var defaults = {
-                origin: { y: 0.7 },
-                zIndex: 10000
-            };
+            var defaults = { origin: { y: 0.7 }, zIndex: 10000 };
 
             function fire(particleRatio, opts) {
                 confetti(Object.assign({}, defaults, opts, {
@@ -333,7 +346,6 @@
             fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
             fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
             fire(0.1, { spread: 120, startVelocity: 45 });
-
         } else {
             alert("INCORRECT PASSCODE. COMPLETE LEVEL 6 FIRST!");
             input.value = ""; 
