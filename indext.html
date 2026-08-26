@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Challenge - Set 1</title>
+    <style>
+        body { font-family: monospace; background-color: #1e1e1e; color: #00ff00; text-align: center; padding-top: 30px; }
+        .container { max-width: 650px; margin: auto; background: #2d2d2d; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        h1 { margin-bottom: 20px; color: #ffffff; }
+        button { background-color: #4CAF50; color: white; border: none; padding: 12px 20px; margin: 8px; font-size: 16px; cursor: pointer; border-radius: 5px; width: 85%; transition: 0.3s; }
+        button:hover { background-color: #45a049; }
+        .locked { background-color: #555; }
+        .locked:hover { background-color: #777; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>DSA Game Progression: Set 1</h1>
+    
+    <!-- Level 1 is open by default -->
+    <button onclick="window.open('https://blockly.games/maze?lang=en&level=3&&skin=0', '_blank')">
+        Level 1: Blockly Maze 3 (Open)
+    </button>
+
+    <!-- Blockly Levels (Locked) -->
+    <button class="locked" onclick="checkPassword('Level 2', 'pass2', 'https://blockly.games/maze?lang=en&level=4&&skin=0')">
+        Level 2: Blockly Maze 4 (Locked)
+    </button>
+
+    <button class="locked" onclick="checkPassword('Level 3', 'pass3', 'https://blockly.games/maze?lang=en&level=6&&skin=0')">
+        Level 3: Blockly Maze 6 (Locked)
+    </button>
+
+    <button class="locked" onclick="checkPassword('Level 4', 'pass4', 'https://blockly.games/maze?lang=en&level=8&&skin=0')">
+        Level 4: Blockly Maze 8 (Locked)
+    </button>
+
+    <!-- Untangle Levels (Locked) -->
+    <button class="locked" onclick="checkPassword('Level 5', 'pass5', 'https://puzzles.twistymaze.com/untangle')">
+        Level 5: Untangle - Set to 6 Nodes (Locked)
+    </button>
+
+    <button class="locked" onclick="checkPassword('Level 6', 'pass6', 'https://puzzles.twistymaze.com/untangle')">
+        Level 6: Untangle - Set to 10 Nodes (Locked)
+    </button>
+
+    <button class="locked" onclick="checkPassword('Level 7', 'pass7', 'https://puzzles.twistymaze.com/untangle')">
+        Level 7: Untangle - Set to 15 Nodes (Locked)
+    </button>
+</div>
+
+<script>
+    function checkPassword(levelName, correctPassword, targetUrl) {
+        let guess = prompt(`Enter the password for ${levelName}.\n(Call the host over to verify your screen to get the password!)`);
+        
+        if (guess === correctPassword) {
+            // Opens directly in a new tab without showing an extra "Access Granted" alert box
+            window.open(targetUrl, '_blank');
+        } else if (guess !== null) {
+            alert("Incorrect password. Solve the previous level first!");
+        }
+    }
+</script>
+
+</body>
+</html>
