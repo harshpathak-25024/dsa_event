@@ -43,41 +43,31 @@
             margin-bottom: 20px;
             text-shadow: 2px 2px 0px #000;
         }
-
-        /* Top Bar with Score */
         .top-bar {
             display: flex; justify-content: space-between; align-items: center;
             background: #000; border: 4px solid #555; padding: 10px 20px; margin-bottom: 30px;
         }
         .score-display { font-family: 'Press Start 2P', cursive; font-size: 14px; color: #39ff14; }
-
-        /* Team Registration Box */
         .team-box { background: #111; border: 4px solid #39ff14; padding: 20px; margin-bottom: 30px; }
         .team-box p { font-size: 20px; }
-
         .level-row {
             display: flex; justify-content: center; align-items: stretch; gap: 15px; margin: 15px 0;
             opacity: 0.3; pointer-events: none; transition: all 0.3s;
         }
         .level-row.active { opacity: 1; pointer-events: auto; }
-        
         button { 
             font-family: 'VT323', monospace; font-size: 22px; color: #fff; 
             border: 4px solid #fff; padding: 10px 15px; cursor: pointer; 
             flex-grow: 1; text-transform: uppercase; box-shadow: 4px 4px 0px #000;
         }
         button:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px #000; }
-        
         .open-btn { background-color: #4caf50; border-color: #ffffff; }
         .open-btn:hover { background-color: #3e8e41; }
         .tutorial-btn { background-color: #008CBA; margin-bottom: 25px; width: 100%; opacity: 1!important; pointer-events: auto!important;}
-        
         button:disabled { background-color: #333; border-color: #555; color: #888; cursor: not-allowed; box-shadow: 4px 4px 0px #111; }
-        
         .unlock-btn { background-color: #d872ff; color: #000; font-weight: bold; flex-grow: 0; border-color: #fff; }
         .unlock-btn:hover { background-color: #b055d3; }
         .victory-btn { background-color: #ffcc00 !important; color: #000 !important; border-color: #fff !important; font-weight: bold; }
-
         input[type="text"], input[type="password"] {
             font-family: 'VT323', monospace; font-size: 20px; padding: 10px;
             border: 4px solid #555; background: #000; color: #39ff14; 
@@ -85,8 +75,6 @@
         }
         input[type="text"]:focus, input[type="password"]:focus { outline: none; border-color: #d872ff; }
         .sync-text { display: block; font-size: 16px; margin-top: 5px; color: #ffcc00; display: none; }
-
-        /* Tutorial Modal Styles */
         #tutorial-modal {
             display: none; position: fixed; z-index: 100; left: 0; top: 0; 
             width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); 
@@ -111,11 +99,9 @@
 </head>
 <body>
 
-<!-- Tutorial Modal Popup -->
 <div id="tutorial-modal">
     <div class="modal-content">
         <h3 style="text-align: center; color: #fff; text-shadow: 2px 2px #d872ff;">--- HOW TO PLAY ---</h3>
-        
         <h3>GAME 1: BLOCKLY MAZE</h3>
         <p>Snap programming blocks together to guide your character to the red target. You must solve the puzzle using the limited blocks provided!</p>
         <video src="blocks.mp4" class="tutorial-video" autoplay loop muted playsinline controls></video>
@@ -125,7 +111,6 @@
             <li><span class="block-highlight">Repeat Until:</span> A loop! Blocks inside will repeat until you reach the finish.</li>
             <li><span class="block-highlight">If Path:</span> A condition. It checks if there is a path in a specific direction.</li>
         </ul>
-
         <h3>GAME 2: UNTANGLE</h3>
         <p>You will see a messy web of points. Drag them until <strong>ZERO lines intersect</strong>.</p>
         <video src="untangle.mp4" class="tutorial-video" autoplay loop muted playsinline controls></video>
@@ -147,10 +132,8 @@
         <span class="score-display">SCORE: <span id="total-score">0</span></span>
     </div>
 
-    <!-- Working Tutorial Button -->
     <button class="tutorial-btn" onclick="openTutorial()">? HOW TO PLAY (TUTORIAL)</button>
 
-    <!-- Team Registration -->
     <div class="team-box" id="team-setup">
         <p>ENTER TEAM NAME TO START TIMER</p>
         <div style="display: flex; gap: 10px; justify-content: center;">
@@ -165,7 +148,6 @@
 
     <!-- Levels -->
     <div class="level-row" id="row-1">
-        <!-- Unlocking L1 awards 0 points -->
         <button id="btn-1" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=4&&skin=0', '_blank')">Level 1: Blockly [Locked]</button>
         <input type="password" id="input-1" placeholder="PASSCODE">
         <button class="unlock-btn" id="unlock-btn-1" onclick="verifyLevel(1, 'PASS1DONE][', 'Level 1: Blockly', 0)">Unlock</button>
@@ -173,7 +155,6 @@
     </div>
 
     <div class="level-row" id="row-2">
-        <!-- Unlocking L2 means they beat L1. Awards 10 pts for L1 -->
         <button id="btn-2" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=6&&skin=0', '_blank')">Level 2: Blockly [Locked]</button>
         <input type="password" id="input-2" placeholder="PASSCODE">
         <button class="unlock-btn" id="unlock-btn-2" onclick="verifyLevel(2, 'PASS2DONE][', 'Level 2: Blockly', 10)">Unlock</button>
@@ -181,7 +162,6 @@
     </div>
 
     <div class="level-row" id="row-3">
-        <!-- Unlocking L3 means they beat L2. Awards 15 pts for L2 -->
         <button id="btn-3" disabled onclick="window.open('https://blockly.games/maze?lang=en&level=8&&skin=0', '_blank')">Level 3: Blockly [Locked]</button>
         <input type="password" id="input-3" placeholder="PASSCODE">
         <button class="unlock-btn" id="unlock-btn-3" onclick="verifyLevel(3, 'PASS3DONE][', 'Level 3: Blockly', 15)">Unlock</button>
@@ -189,26 +169,23 @@
     </div>
 
     <div class="level-row" id="row-4">
-        <!-- Unlocking L4 means they beat L3. Awards 25 pts for L3 -->
-        <button id="btn-4" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">Level 4: Untangle (6 Nodes) [Locked]</button>
+        <button id="btn-4" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">Level 4: Untangle (8 Nodes) [Locked]</button>
         <input type="password" id="input-4" placeholder="PASSCODE">
-        <button class="unlock-btn" id="unlock-btn-4" onclick="verifyLevel(4, 'PASS4DONE][', 'Level 4: Untangle (6 Nodes)', 25)">Unlock</button>
+        <button class="unlock-btn" id="unlock-btn-4" onclick="verifyLevel(4, 'PASS4DONE][', 'Level 4: Untangle (8 Nodes)', 25)">Unlock</button>
         <div class="sync-text" id="sync-4">Syncing...</div>
     </div>
 
     <div class="level-row" id="row-5">
-        <!-- Unlocking L5 means they beat L4. Awards 10 pts for L4 -->
-        <button id="btn-5" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">Level 5: Untangle (10 Nodes) [Locked]</button>
+        <button id="btn-5" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">Level 5: Untangle (12 Nodes) [Locked]</button>
         <input type="password" id="input-5" placeholder="PASSCODE">
-        <button class="unlock-btn" id="unlock-btn-5" onclick="verifyLevel(5, 'PASS5DONE][', 'Level 5: Untangle (10 Nodes)', 10)">Unlock</button>
+        <button class="unlock-btn" id="unlock-btn-5" onclick="verifyLevel(5, 'PASS5DONE][', 'Level 5: Untangle (12 Nodes)', 10)">Unlock</button>
         <div class="sync-text" id="sync-5">Syncing...</div>
     </div>
 
     <div class="level-row" id="row-6">
-        <!-- Unlocking L6 means they beat L5. Awards 15 pts for L5 -->
-        <button id="btn-6" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">Level 6: Untangle (14 Nodes) [Locked]</button>
+        <button id="btn-6" disabled onclick="window.open('https://puzzles.twistymaze.com/untangle', '_blank')">Level 6: Untangle (20 Nodes) [Locked]</button>
         <input type="password" id="input-6" placeholder="PASSCODE">
-        <button class="unlock-btn" id="unlock-btn-6" onclick="verifyLevel(6, 'PASS6DONE][', 'Level 6: Untangle (14 Nodes)', 15)">Unlock</button>
+        <button class="unlock-btn" id="unlock-btn-6" onclick="verifyLevel(6, 'PASS6DONE][', 'Level 6: Untangle (20 Nodes)', 15)">Unlock</button>
         <div class="sync-text" id="sync-6">Syncing...</div>
     </div>
 
@@ -216,23 +193,18 @@
     <div class="level-row" id="row-win" style="margin-top: 40px;">
         <button id="btn-win" disabled>--- FINISH LINE ---</button>
         <input type="password" id="input-win" placeholder="PASSCODE" style="width: 140px;">
-        <!-- Unlocking Finish Line means they beat L6. Awards 25 pts for L6 -->
         <button class="unlock-btn" id="unlock-btn-win" onclick="verifyVictory('SET1COMPLETED][', 25)">Unlock</button>
         <div class="sync-text" id="sync-win">Syncing...</div>
     </div>
 </div>
 
 <script>
-    // ==========================================
-    // FULLY CONNECTED GOOGLE SCRIPT URL:
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw0JMmLJ3-Z1HadmTWkX_EnK3CVkMFLg-Sx7Jo0sh_LDOPZ6nvpAcrAWiqZkVT2OGrp6g/exec";
-    // ==========================================
 
     let currentScore = 0;
     let currentTeam = "";
     let startTime = 0;
 
-    // Tutorial Functions
     function openTutorial() { document.getElementById('tutorial-modal').style.display = 'block'; }
     function closeTutorial() { document.getElementById('tutorial-modal').style.display = 'none'; }
 
@@ -243,10 +215,8 @@
         currentTeam = nameInput;
         document.getElementById('team-name-display').innerText = "TEAM: " + currentTeam;
         
-        // Start background timer
         startTime = Date.now();
         
-        // Hide setup box and unlock all rows visually
         document.getElementById('team-setup').style.display = 'none';
         document.getElementById('row-trial').classList.add('active');
         for(let i=1; i<=6; i++) document.getElementById(`row-${i}`).classList.add('active');
@@ -260,21 +230,17 @@
         let syncText = document.getElementById(`sync-${levelNum}`);
 
         if (input.value.trim().toUpperCase() === correctPassword.toUpperCase()) {
-            
-            // Update UI
             mainBtn.disabled = false;
             mainBtn.classList.add('open-btn');
             mainBtn.innerText = `${levelLabel} [PLAY]`;
             input.style.display = 'none';
             unlockBtn.style.display = 'none';
             
-            // Add Points (Only if they actually earned points for the previous level)
             if (pointsEarnedForPreviousLevel > 0) {
                 currentScore += pointsEarnedForPreviousLevel;
                 document.getElementById('total-score').innerText = currentScore;
                 
                 syncText.style.display = 'block';
-                // Note: We send (levelNum - 1) to the script because they are getting points for the PREVIOUS level
                 let levelToAward = levelNum - 1; 
                 let fetchUrl = `${WEB_APP_URL}?team=${encodeURIComponent(currentTeam)}&level=${levelToAward}&score=${pointsEarnedForPreviousLevel}&total=${currentScore}`;
                 
@@ -282,7 +248,6 @@
                     .then(() => { syncText.innerText = "+"+pointsEarnedForPreviousLevel+" pts Saved!"; setTimeout(() => syncText.style.display='none', 3000); })
                     .catch(() => { syncText.innerText = "Sync Failed"; });
             }
-                
         } else {
             alert("INCORRECT PASSCODE. CALL THE HOST!");
             input.value = ""; 
@@ -296,11 +261,8 @@
         let syncText = document.getElementById(`sync-win`);
 
         if (input.value.trim().toUpperCase() === correctPassword.toUpperCase()) {
-            
-            // Add Points for Level 6
             currentScore += pointsEarnedForLevel6;
             
-            // Check Timer for Bonus
             let elapsedMinutes = (Date.now() - startTime) / 60000;
             let timeBonus = 0;
             
@@ -312,7 +274,6 @@
             
             document.getElementById('total-score').innerText = currentScore;
 
-            // Update UI
             mainBtn.disabled = false;
             mainBtn.classList.add('victory-btn');
             mainBtn.innerText = "🏆 MISSION ACCOMPLISHED 🏆";
@@ -320,20 +281,15 @@
             unlockBtn.style.display = 'none';
             syncText.style.display = 'block';
 
-            // Send Level 6 Points to Sheets
             let fetchUrlLevel6 = `${WEB_APP_URL}?team=${encodeURIComponent(currentTeam)}&level=6&score=${pointsEarnedForLevel6}&total=${currentScore}`;
             fetch(fetchUrlLevel6, { mode: 'no-cors' }).then(() => {
-                
-                // If they got the bonus, send the bonus points too
                 if (timeBonus > 0) {
                     let fetchUrlBonus = `${WEB_APP_URL}?team=${encodeURIComponent(currentTeam)}&level=bonus&score=${timeBonus}&total=${currentScore}`;
                     fetch(fetchUrlBonus, { mode: 'no-cors' });
                 }
-                
                 syncText.innerText = "Final Score Saved!";
             });
 
-            // Confetti
             var count = 250;
             var defaults = { origin: { y: 0.7 }, zIndex: 10000 };
             function fire(particleRatio, opts) {
@@ -344,7 +300,6 @@
             fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
             fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
             fire(0.1, { spread: 120, startVelocity: 45 });
-
         } else {
             alert("INCORRECT PASSCODE. COMPLETE LEVEL 6 FIRST!");
             input.value = ""; 
